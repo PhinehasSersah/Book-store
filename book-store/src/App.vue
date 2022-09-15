@@ -3,14 +3,19 @@ import Hearder from "./components/Home/Hearder.vue";
 // import LoginVue from "./components/Home/Login.vue";
 import Login from "./components/Home/Login.vue";
 import Hero from "./components/Home/Hero.vue";
+import Product from "./components/Home/Product.vue";
+import CartItem from "./components/Home/CartItem.vue";
+import Cart from "./components/Home/Cart.vue";
+// import CartItem from "./components/Home/CartItem.vue";
+
 </script>
 
 <template>
   <div class="">
-    <Hearder />
-    <!-- <Login /> -->
-    <Hero />
-    <div class="inline-flex justify-center items-center w-full my-16">
+    <!-- <Hearder /> -->
+    <!-- <Login />  -->
+    <!-- <Hero />
+    <div class="inline-flex justify-center items-center w-full mt-16">
       <hr
         class="my-4 w-1/3 h-1 bg-gray-200 rounded border-0 dark:bg-gray-700"
       />
@@ -20,7 +25,10 @@ import Hero from "./components/Home/Hero.vue";
         <h2 class="font-bold text-dark text-xl">Products</h2>
       </div>
     </div>
-    <div class="w-8/12 h-screen bg-light mx-auto"></div>
+
+    <Product /> -->
+    <!-- <CartItem /> -->
+    <Cart />
   </div>
 </template>
 >
