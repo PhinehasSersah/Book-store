@@ -1,14 +1,26 @@
 <script setup>
-  import Hearder from './components/Home/Hearder.vue';
-  import LoginVue from './components/Home/Login.vue';
-import Login from './components/Home/Login.vue';
-
-
+import Hearder from "./components/Home/Hearder.vue";
+// import LoginVue from "./components/Home/Login.vue";
+import Login from "./components/Home/Login.vue";
+import Hero from "./components/Home/Hero.vue";
 </script>
 
 <template>
-  <!-- <Hearder /> -->
-  <Login />
-  
-</template>>
-
+  <div class="">
+    <Hearder />
+    <!-- <Login /> -->
+    <Hero />
+    <div class="inline-flex justify-center items-center w-full my-16">
+      <hr
+        class="my-4 w-1/3 h-1 bg-gray-200 rounded border-0 dark:bg-gray-700"
+      />
+      <div
+        class="absolute left-1/2 px-4 bg-white -translate-x-1/2 dark:bg-gray-900"
+      >
+        <h2 class="font-bold text-dark text-xl">Products</h2>
+      </div>
+    </div>
+    <div class="w-8/12 h-screen bg-light mx-auto"></div>
+  </div>
+</template>
+>
