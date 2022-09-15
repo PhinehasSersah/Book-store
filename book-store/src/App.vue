@@ -6,6 +6,7 @@ import Hero from "./components/Home/Hero.vue";
 import Product from "./components/Home/Product.vue";
 import CartItem from "./components/Home/CartItem.vue";
 import Cart from "./components/Home/Cart.vue";
+import Administration from "./components/Admin/Administration.vue";
 // import CartItem from "./components/Home/CartItem.vue";
 
 </script>
@@ -28,7 +29,8 @@ import Cart from "./components/Home/Cart.vue";
 
     <Product /> -->
     <!-- <CartItem /> -->
-    <Cart />
+    <!-- <Cart /> -->
+    <Administration />
   </div>
 </template>
 >

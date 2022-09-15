@@ -16,7 +16,7 @@
           Here are the biggest enterprise technology acquisitions of 2021 so
           far, in reverse chronological order.
         </p>
-        <div class="mt-6 flex justify-between w-96">
+        <div class="mt-6 flex justify-between w-full">
           <div class="inline-flex rounded-md shadow-sm border-2">
             <button
               @click="decrement()"
