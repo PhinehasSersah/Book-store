@@ -1,6 +1,29 @@
 <template>
-  <div>
-    <form class="w-3/5 mx-auto shadow-lg shadow-brown rounded-lg p-12 my-16">
+  <div class="relative">
+    <p
+      @click="handleDelete()"
+      class="w-20 justify-between h-6 font-bold text-red-600 absolute right-44 top-4 flex cursor-pointer hover:scale-110 transition duration-200"
+    >
+      Delete
+      <svg
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+        ></path>
+      </svg>
+    </p>
+    <form
+      @click.prevent="handleEdit()"
+      class="w-3/5 mx-auto shadow-lg shadow-brown rounded-lg p-12 my-16"
+    >
       <div class="mb-2">
         <label
           for="title"
@@ -80,14 +103,8 @@
           type="submit"
           class="text-white bg-dark hover:bg-light hover:text-dark hover:border-2 hover:border-dark focus:ring-4 focus:outline-none focus:ring-dark font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-dark dark:hover:bg-dark dark:focus:ring-dark"
         >
-          Submit
+          Confirm Edit
         </button>
-        <p
-          type="submit"
-          class="text-white bg-red-600 hover:bg-light hover:text-red-600 hover:border-2 hover:border-red-600 focus:ring-4 focus:outline-none focus:ring-red-600 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-dark dark:hover:bg-dark dark:focus:ring-dark"
-        >
-          Delete
-        </p>
       </div>
     </form>
   </div>
@@ -95,20 +112,89 @@
 
 <script setup>
 import { ref, reactive } from "vue";
+import router from "../../router";
+import axiosConfig from "../../utils/axioxConfig";
+const props = defineProps({
+  title: {
+    type: String,
+  },
+  description: {
+    type: String,
+  },
+  picture: {
+    type: String,
+  },
+  price: {
+    type: Number,
+  },
+  id: {
+    type: String,
+  },
+  quantity: {
+    type: Number,
+  },
+});
 
 // Editing books
 
 const editBookData = reactive({
-  title: "",
-  quantity: "",
-  price: "",
-  description: "",
+  title: props.title || "",
+  quantity: props.quantity || "",
+  price: props.price || "",
+  description: props.description || "",
 });
-const editPictureData = ref();
+const editPictureData = ref(props.picture);
 const handleEditImageChange = ($event) => {
   let target = $event.target;
   if (target && target.files) {
     editPictureData.value = target.files[0];
+  }
+};
+
+// edit book data function
+const handleEdit = async () => {
+  if (
+    !editBookData.title ||
+    !editBookData.description ||
+    !editBookData.price ||
+    !editBookData.quantity ||
+    !editPictureData.value
+  ) {
+    return;
+  }
+  let formData = new FormData();
+  formData.append("title", editBookData.title);
+  formData.append("description", editBookData.description);
+  formData.append("price", editBookData.price);
+  formData.append("quantity", editBookData.quantity);
+  formData.append("picture", editPictureData.value);
+
+  const token = localStorage.getItem("token");
+  try {
+    await axiosConfig.put(`books/${props.id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
+// deleting books
+const handleDelete = async () => {
+  const token = localStorage.getItem("token");
+  try {
+    alert("Comfirm Delete");
+    await axiosConfig.delete(`books/${props.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    router.go()
+  } catch (error) {
+    throw error;
   }
 };
 </script>

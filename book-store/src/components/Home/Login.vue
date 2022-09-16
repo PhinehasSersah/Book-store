@@ -176,7 +176,7 @@ const handleSignUp = async () => {
   formData.append("password", signUpData.password);
 
   try {
-    await axiosConfig.post("/register", formData, {
+    await axiosConfig.post("auth/register", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -197,7 +197,7 @@ const handleSingIn = async () => {
   formData.append("password", loginData.password);
 
   try {
-    const response = await axiosConfig.post("/login", formData, {
+    const response = await axiosConfig.post("auth/login", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -209,10 +209,9 @@ const handleSingIn = async () => {
     loginData.password = "";
 
     const userData = response?.data?.user;
-    if (userData.name === "Admin1") {
+    if (userData.name === "admin") {
       setTimeout(() => {
         router.push("/admin");
-        // router.go("/admin");
       }, 3000);
     } else {
       setTimeout(() => {
