@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="">
+  <div class="overflow-x-hidden">
     <RouterView></RouterView>
   </div>
 </template>

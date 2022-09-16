@@ -1,15 +1,18 @@
 <template>
   <div class="h-screen w-screen flex items-center gap-8 bg-light">
-    <div class="w-3/5 h-full bg-black mx-auto">
-      <img
-        class="w-full h-full object-cover"
-        src="../../assets/reading.jpg"
-        alt="login image"
-      />
+    <div class="w-3/5 h-full mx-auto">
+      <div class="w-full h-full">
+        <img
+          class="w-full h-full object-cover"
+          src="../../assets/reading.jpg"
+          alt="login image"
+        />
+      </div>
     </div>
 
     <div class="w-3/5 h-4/5 mx-auto flex flex-col">
       <form
+        @submit.prevent="handleSingIn()"
         v-if="!showSignUp"
         class="w-6/12 mx-auto shadow-lg p-8 rounded-lg bg-brown"
       >
@@ -52,7 +55,13 @@
           </button>
         </div>
       </form>
-      <form v-else class="w-6/12 mx-auto shadow-lg p-8 rounded-lg bg-brown">
+
+      <!-- sing up  -->
+      <form
+        @submit.prevent="handleSignUp()"
+        v-else
+        class="w-6/12 mx-auto shadow-lg p-8 rounded-lg bg-brown"
+      >
         <h2 class="font-bold text-center my-16 text-2xl">Sign Up</h2>
         <div class="mb-6">
           <label
@@ -129,6 +138,8 @@
 
 <script setup>
 import { ref, reactive, watch } from "vue";
+import router from "../../router";
+import axiosConfig from "../../utils/axioxConfig";
 const showSignUp = ref(true);
 
 const loginData = reactive({
@@ -152,5 +163,64 @@ watch(signUpData, () => {
 
 const toggle = () => {
   showSignUp.value = !showSignUp.value;
+};
+
+// handleSignUP
+
+const handleSignUp = async () => {
+  if (!signUpData.name || !signUpData.password) {
+    return (errorMessage.value = "Please enter name and password");
+  }
+  let formData = new FormData();
+  formData.append("name", signUpData.name);
+  formData.append("password", signUpData.password);
+
+  try {
+    await axiosConfig.post("/register", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    signUpData.name = "";
+    signUpData.password = "";
+    signUpData.confirmPassword = "";
+  } catch (error) {
+    throw error;
+  }
+};
+const handleSingIn = async () => {
+  if (!loginData.name || !loginData.password) {
+    return (errorMessage.value = "Please enter name and password");
+  }
+  let formData = new FormData();
+  formData.append("name", loginData.name);
+  formData.append("password", loginData.password);
+
+  try {
+    const response = await axiosConfig.post("/login", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("loggedIn", true);
+    loginData.name = "";
+    loginData.password = "";
+
+    const userData = response?.data?.user;
+    if (userData.name === "Admin1") {
+      setTimeout(() => {
+        router.push("/admin");
+        // router.go("/admin");
+      }, 3000);
+    } else {
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
+    }
+  } catch (error) {
+    throw error;
+  }
 };
 </script>
