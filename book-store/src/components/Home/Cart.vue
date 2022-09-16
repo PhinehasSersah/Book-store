@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-screen bg-light">
+  <div class="w-full h-[88vh] bg-light">
     <h3 class="text-center text-2xl p-4 text-dark">Cart</h3>
     <div class="overflow-y-auto w-10/12 h-4/5 mx-auto grid place-items-center">
       <CartItem />
