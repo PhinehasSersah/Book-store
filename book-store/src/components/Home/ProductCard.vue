@@ -1,24 +1,31 @@
 <template>
   <div>
     <div
-      class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
+      class="w-96 h-[75vh] bg-light rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
     >
-      <img class="rounded-t-lg" src="../../assets/books-store.png" alt="" />
+      <div class="w-full h-3/5">
+        <img
+          class="w-full h-full rounded-t-lg object-cover"
+          :src="props.picture"
+          alt="books picture"
+        />
+      </div>
 
       <div class="p-5">
         <h5
           class="mb-2 text-2xl font-bold tracking-tight text-dark dark:text-white"
         >
-          Noteworthy title
+          {{ props.title }}
         </h5>
 
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          Here are the biggest enterprise technology acquisitions of 2021 so
-          far, in reverse chronological order.
+          {{ props.description }}
         </p>
       </div>
       <div class="flex px-5 justify-between py-3">
-        <p>GHC: <span class="font-bold">150</span></p>
+        <p>
+          GHC: <span class="font-bold">{{ props.price }}</span>
+        </p>
         <button
           type="button"
           class="text-white bg-dark hover:bg-brown hover:text-dark focus:ring-4 focus:outline-none focus:ring-dark font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-light dark:hover:bg-brown dark:focus:ring-dark"
@@ -41,4 +48,25 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const props = defineProps({
+  title: {
+    type: String,
+  },
+  description: {
+    type: String,
+  },
+  picture: {
+    type: String,
+  },
+  price: {
+    type: Number,
+  },
+  id: {
+    type: String,
+  },
+  quantity: {
+    type: Number,
+  },
+});
+</script>
