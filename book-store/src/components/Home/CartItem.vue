@@ -37,7 +37,9 @@
       </div>
 
       <div>
-        <button class="text-red-600">
+        <button
+        @click="handleDelete(props.id)"
+        class="text-red-600">
           <svg
             class="w-6 h-6"
             fill="none"
@@ -90,6 +92,9 @@ const props = defineProps({
   },
   quantity: {
     type: Number,
+  },
+  handleDelete: {
+    type: Function,
   },
 });
 </script>

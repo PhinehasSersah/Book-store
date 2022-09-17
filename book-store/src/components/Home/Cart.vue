@@ -13,6 +13,7 @@
           :price="item?.bookID?.price"
           :id="item?._id"
           :quantity="item?.bookID?.quantity"
+          :handleDelete="handleDelete"
         />
       </div>
 
@@ -66,14 +67,15 @@
 import CartItem from "./CartItem.vue";
 import { ref, onMounted } from "vue";
 import axiosConfig from "../../utils/axioxConfig";
+import router from "../../router";
 
 // get cart Items
 
 const allCartItems = ref();
 const loading = ref(true);
 const error = ref(null);
+const token = localStorage.getItem("token");
 const getAllCart = async () => {
-  const token = localStorage.getItem("token");
   try {
     loading.value = true;
     const response = await axiosConfig.get("cart", {
@@ -89,5 +91,25 @@ const getAllCart = async () => {
     throw err;
   }
 };
+//  deleting items in cart
+
+const deleteMesssage = ref("");
+const handleDelete = async (id) => {
+  try {
+    const response = await axiosConfig.delete(`cart/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    deleteMesssage.value = response.data.msg;
+    setTimeout(() => {
+      router.go();
+    }, 1500);
+  } catch (error) {
+    throw error;
+  }
+};
+
 onMounted(() => getAllCart());
 </script>
