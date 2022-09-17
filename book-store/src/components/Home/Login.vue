@@ -210,6 +210,7 @@ const handleSingIn = async () => {
 
     const userData = response?.data?.user;
     if (userData.name === "admin") {
+      localStorage.setItem("admin", true);
       setTimeout(() => {
         router.push("/admin");
       }, 3000);
