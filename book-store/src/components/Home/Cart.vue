@@ -1,5 +1,8 @@
 <template>
-  <div class="w-full h-[88vh] bg-light">
+  <d
+  
+  
+  iv class="w-full h-[88vh] bg-light">
     <h3 class="text-center text-2xl p-4 text-dark">Cart</h3>
     <div
       v-if="!loading && allCartItems && allCartItems.length"
@@ -60,7 +63,7 @@
         </svg>
       </button>
     </div>
-  </div>
+  </d>
 </template>
 
 <script setup>
@@ -103,9 +106,8 @@ const handleDelete = async (id) => {
     });
 
     deleteMesssage.value = response.data.msg;
-    setTimeout(() => {
-      router.go();
-    }, 1500);
+
+    router.go();
   } catch (error) {
     throw error;
   }

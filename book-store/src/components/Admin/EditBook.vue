@@ -20,6 +20,8 @@
         ></path>
       </svg>
     </p>
+
+
     <form
       @click.prevent="handleEdit()"
       class="w-3/5 mx-auto shadow-lg shadow-brown rounded-lg p-12 my-16"
@@ -155,15 +157,15 @@ const handleEditImageChange = ($event) => {
 
 // edit book data function
 const handleEdit = async () => {
-  if (
-    !editBookData.title ||
-    !editBookData.description ||
-    !editBookData.price ||
-    !editBookData.quantity ||
-    !editPictureData.value
-  ) {
-    return;
-  }
+  // if (
+  //   !editBookData.title ||
+  //   !editBookData.description ||
+  //   !editBookData.price ||
+  //   !editBookData.quantity ||
+  //   !editPictureData.value
+  // ) {
+  //   return;
+  // }
   let formData = new FormData();
   formData.append("title", editBookData.title);
   formData.append("description", editBookData.description);

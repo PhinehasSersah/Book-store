@@ -8,7 +8,7 @@
           alt="cart item image"
         />
       </div>
-      <div class="flex flex-col px-4 leading-normal">
+      <div class="flex flex-col px-4 leading-normal w-1/3">
         <h5 class="text-xl font-bold tracking-tight text-dark dark:text-white">
           {{ props.title }}
         </h5>
@@ -36,7 +36,7 @@
         </div>
       </div>
 
-      <div>
+      <div class="flex flex-col justify-between items-end w-24 bgblack">
         <button
         @click="handleDelete(props.id)"
         class="text-red-600">
@@ -55,6 +55,7 @@
             ></path>
           </svg>
         </button>
+        <p class="font-bold">GHC {{props.price * quantity}}</p>
       </div>
     </div>
     <hr class="my-1 h-px bg-dark border-0 dark:bg-gray-700" />

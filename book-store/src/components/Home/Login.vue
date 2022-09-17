@@ -184,6 +184,7 @@ const handleSignUp = async () => {
     signUpData.name = "";
     signUpData.password = "";
     signUpData.confirmPassword = "";
+    showSignUp.value = false
   } catch (error) {
     throw error;
   }
