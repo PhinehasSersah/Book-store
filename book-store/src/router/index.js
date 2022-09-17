@@ -24,6 +24,7 @@ const routes = [
     path: "/admin",
     name: "Admin",
     component: Administration,
+    meta: { auth: true },
   },
 ];
 const router = createRouter({
@@ -32,4 +33,14 @@ const router = createRouter({
   linkActiveClass: "active-link",
 });
 
+router.beforeEach((to, from, next) => {
+  const admin = localStorage.getItem("admin");
+  if (to.meta.auth && !admin) {
+    next("/");
+  } else if (to.meta.auth && admin) {
+    next();
+  } else {
+    next()
+  }
+});
 export default router;
