@@ -80,7 +80,9 @@
           id="image"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dark focus:border-dark block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-dark dark:focus:border-dark"
           required
-          @change="handleEditImageChange($event)"
+          v-on:change="handleImageChange($event)"
+          accept="image/*"
+          capture
         />
       </div>
       <div class="mb-2">
@@ -143,7 +145,7 @@ const editBookData = reactive({
   price: props.price || "",
   description: props.description || "",
 });
-const editPictureData = ref(props.picture);
+const editPictureData = ref();
 const handleEditImageChange = ($event) => {
   let target = $event.target;
   if (target && target.files) {
@@ -192,7 +194,7 @@ const handleDelete = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    router.go()
+    router.go();
   } catch (error) {
     throw error;
   }

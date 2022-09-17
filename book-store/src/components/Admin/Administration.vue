@@ -203,7 +203,6 @@ const getAllBooks = async () => {
   try {
     loading.value = true;
     const response = await axiosConfig.get("books");
-    console.log(response.data.books);
     allBooks.value = response.data.books;
     console.log(allBooks);
     loading.value = false;

@@ -1,20 +1,19 @@
 <template>
   <div class="py-4">
-    <div class="flex w-full px-8 h-36 py-1">
-      <div>
+    <div class="flex justify-between w-full px-8 h-36 py-1">
+      <div class="w-60 h-full">
         <img
-          class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
-          src="../../assets/reading.jpg"
+          class="object-cover w-full h-full rounded-t-lg"
+          :src="props.picture"
           alt="cart item image"
         />
       </div>
       <div class="flex flex-col px-4 leading-normal">
         <h5 class="text-xl font-bold tracking-tight text-dark dark:text-white">
-          Noteworthy technology acquisitions 2021
+          {{ props.title }}
         </h5>
         <p class="font-normal text-dark dark:text-gray-400 truncate">
-          Here are the biggest enterprise technology acquisitions of 2021 so
-          far, in reverse chronological order.
+          {{ props.description }}
         </p>
         <div class="mt-6 flex justify-between w-full">
           <div class="inline-flex rounded-md shadow-sm border-2">
@@ -34,23 +33,26 @@
               +
             </button>
           </div>
-          <button class="text-dark">
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-              ></path>
-            </svg>
-          </button>
         </div>
+      </div>
+
+      <div>
+        <button class="text-red-600">
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+            ></path>
+          </svg>
+        </button>
       </div>
     </div>
     <hr class="my-1 h-px bg-dark border-0 dark:bg-gray-700" />
@@ -70,4 +72,24 @@ const decrement = () => {
 const increment = () => {
   quantity.value++;
 };
+const props = defineProps({
+  title: {
+    type: String,
+  },
+  description: {
+    type: String,
+  },
+  picture: {
+    type: String,
+  },
+  price: {
+    type: Number,
+  },
+  id: {
+    type: String,
+  },
+  quantity: {
+    type: Number,
+  },
+});
 </script>

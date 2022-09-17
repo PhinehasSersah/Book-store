@@ -27,6 +27,7 @@
           GHC: <span class="font-bold">{{ props.price }}</span>
         </p>
         <button
+        @click="addToCart(props.id, 1)"
           type="button"
           class="text-white bg-dark hover:bg-brown hover:text-dark focus:ring-4 focus:outline-none focus:ring-dark font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-light dark:hover:bg-brown dark:focus:ring-dark"
         >
@@ -67,6 +68,9 @@ const props = defineProps({
   },
   quantity: {
     type: Number,
+  },
+  addToCart: {
+    type: Function,
   },
 });
 </script>

@@ -57,6 +57,7 @@
             :price="item.price"
             :id="item._id"
             :quantity="item.quantity"
+            :addToCart="addToCart"
           />
         </div>
 
@@ -107,4 +108,30 @@ onMounted(() => getAllBooks());
 // search functionality
 const search = ref("");
 watch(search, () => getAllBooks());
+
+// add  to cart
+const errorMessage = ref("");
+const successMessage = ref("");
+const loggedIn = localStorage.getItem("loggedIn");
+const token = localStorage.getItem("token");
+const addToCart = async (bookID, quantity) => {
+  if (!loggedIn) {
+    errorMessage.value = "Login or sign up before";
+    return;
+  }
+  let formData = new FormData();
+  formData.append("bookID", bookID);
+  formData.append("quantity", quantity);
+  try {
+    const response = await axiosConfig.post("cart", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    successMessage.value = response.data.msg;
+  } catch (error) {
+    throw error;
+  }
+};
 </script>
