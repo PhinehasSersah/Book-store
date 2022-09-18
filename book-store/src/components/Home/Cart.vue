@@ -114,8 +114,10 @@
               </p>
             </div>
           </div>
-          <p class="text-center font-bold my-5">Total Price: GHC {{totalItemPrice}}</p>
-      
+          <p class="text-center font-bold my-5">
+            Total Price: GHC {{ totalItemPrice }}
+          </p>
+
           <!-- Modal footer -->
           <div
             class="flex items-center justify-between p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600"

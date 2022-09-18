@@ -1,10 +1,17 @@
 <template>
   <div>
+    <!-- <p class="text-red-600 font-bold my-3 fixed top-10 bg-">{{ cartError }}</p> -->
     <p
       v-if="logError"
       class="fixed top-5 left-1/2 -translate-x-1/2 z-10 rounded-lg font-bold shadow-lg p-5 bg-white text-red-600"
     >
       {{ errorMessage }}
+    </p>
+    <p
+      v-if="logSuccess"
+      class="fixed top-5 left-1/2 -translate-x-1/2 z-10 rounded-lg font-bold shadow-lg p-5 bg-white text-green-600"
+    >
+      {{ successMessage }}
     </p>
     <div class="relative">
       <div class="w-96 mx-auto my-20">
@@ -146,8 +153,11 @@ const search = ref("");
 watch(search, () => getAllBooks());
 
 // add  to cart
+
+const logSuccess = ref(false);
+const allCartItems = ref();
 const logError = ref(false);
-const cartLenght = ref()
+const cartLenght = ref();
 const errorMessage = ref("");
 const successMessage = ref("");
 const loggedIn = localStorage.getItem("loggedIn");
@@ -159,9 +169,20 @@ const addToCart = async (bookID, quantity) => {
     setTimeout(() => {
       logError.value = false;
       errorMessage.value = "";
-      router.push('/signup')
+      router.push("/signup");
     }, 3000);
     return;
+  }
+  for (let item of allCartItems.value) {
+    if (item.bookID._id === bookID) {
+      logError.value = true;
+      errorMessage.value = "Item already in cart";
+      setTimeout(() => {
+        logError.value = false;
+        errorMessage.value = "";
+      }, 3000);
+      return;
+    }
   }
   let formData = new FormData();
   formData.append("bookID", bookID);
@@ -175,13 +196,28 @@ const addToCart = async (bookID, quantity) => {
     });
     // getAllCart();
     successMessage.value = response.data.msg;
-    cartLenght.value ++
+    logSuccess.value = true;
+    cartLenght.value++;
     // router.go();
+    setTimeout(() => {
+      logSuccess.value = false;
+    }, 3000);
   } catch (error) {
     throw error;
   }
 };
-const allCartItems = ref();
+
+// funtion to check item already in the cart
+const checkItem = (id) => {
+  for (let item of allCartItems.value) {
+    if (item.bookID._id === id) {
+      inCart.value = true;
+      console.log(inCart.value);
+      return (cartError.value = "item already in cart");
+    }
+  }
+};
+
 // getting all cart Items
 const getAllCart = async () => {
   try {
@@ -192,8 +228,8 @@ const getAllCart = async () => {
       },
     });
     allCartItems.value = response.data.cart;
-    console.log(response.data);
-    cartLenght.value = response.data.count
+    console.log(allCartItems.value);
+    cartLenght.value = response.data.count;
     // loading.value = false;
   } catch (err) {
     error.value = err;

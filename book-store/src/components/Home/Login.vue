@@ -21,7 +21,7 @@
           <label
             for="name"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >Your name</label
+            >User name</label
           >
           <input
             type="text"
@@ -29,14 +29,14 @@
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dark focus:border-dark block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-dark dark:focus:border-dark"
             placeholder="Enter your name"
             required
-            v-model="loginData.name"
+            v-model="loginData.username"
           />
         </div>
         <div class="mb-6">
           <label
             for="password"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >Your password</label
+            >User password</label
           >
           <input
             type="password"
@@ -67,7 +67,7 @@
           <label
             for="sign-name"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >Your name</label
+            >User name</label
           >
           <input
             type="text"
@@ -75,14 +75,14 @@
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dark focus:border-dark block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-dark dark:focus:border-dark"
             placeholder="Enter your name"
             required
-            v-model="signUpData.name"
+            v-model="signUpData.username"
           />
         </div>
         <div class="mb-6">
           <label
             for="sign-password"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >Your password</label
+            >User password</label
           >
           <input
             type="password"
