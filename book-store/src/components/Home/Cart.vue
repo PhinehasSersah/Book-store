@@ -110,10 +110,11 @@
               :key="index"
             >
               <p class="border-2 my-2 w-full h-10 font-semibold p-1 rounded-sm">
-                {{ item.bookID.title }}
+                {{ item?.bookID?.title }}
               </p>
             </div>
           </div>
+          <p class="text-center font-bold my-5">Total Price: GHC {{totalItemPrice}}</p>
       
           <!-- Modal footer -->
           <div
