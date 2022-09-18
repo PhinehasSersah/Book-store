@@ -37,9 +37,7 @@
       </div>
 
       <div class="flex flex-col justify-between items-end w-24 bgblack">
-        <button
-        @click="handleDelete(props.id)"
-        class="text-red-600">
+        <button @click="handleDelete(props.id)" class="text-red-600">
           <svg
             class="w-6 h-6"
             fill="none"
@@ -55,7 +53,12 @@
             ></path>
           </svg>
         </button>
-        <p class="font-bold">GHC {{props.price * quantity}}</p>
+        <p class="font-bold">
+          GHC
+          <span class="price">
+            {{ quantity * Number(props.price) }}
+          </span>
+        </p>
       </div>
     </div>
     <hr class="my-1 h-px bg-dark border-0 dark:bg-gray-700" />
@@ -63,18 +66,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-const quantity = ref(1);
+import { ref, watch, onMounted } from "vue";
 
-const decrement = () => {
-  if (quantity.value === 1) {
-    return;
-  }
-  quantity.value--;
-};
-const increment = () => {
-  quantity.value++;
-};
 const props = defineProps({
   title: {
     type: String,
@@ -97,5 +90,29 @@ const props = defineProps({
   handleDelete: {
     type: Function,
   },
+  settingTotal: {
+    type: Function,
+  },
 });
+
+const quantity = ref(1);
+const decrement = () => {
+  if (quantity.value === 1) {
+    return;
+  }
+  quantity.value--;
+};
+const increment = () => {
+  if (quantity.value === Number(props.quantity)) {
+    return;
+  }
+  quantity.value++;
+};
+
+watch(quantity, () => {
+  setTimeout(() => {
+    props.settingTotal();
+  }, 100);
+});
+onMounted(() => props.settingTotal());
 </script>

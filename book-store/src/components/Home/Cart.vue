@@ -1,8 +1,5 @@
 <template>
-  <d
-  
-  
-  iv class="w-full h-[88vh] bg-light">
+  <div class="w-full h-[88vh] bg-light">
     <h3 class="text-center text-2xl p-4 text-dark">Cart</h3>
     <div
       v-if="!loading && allCartItems && allCartItems.length"
@@ -17,6 +14,7 @@
           :id="item?._id"
           :quantity="item?.bookID?.quantity"
           :handleDelete="handleDelete"
+          :settingTotal="settingTotal"
         />
       </div>
 
@@ -39,9 +37,9 @@
         </svg>
       </p>
     </div>
-    <div class="w-2/5 mx-auto flex justify-between my-6">
-      <p class="font-bold">
-        Total Price <span>GHC {{ 300 }}</span>
+    <div class="w-2/5 mx-auto flex justify-between my-5">
+      <p class="font-bold text-xl">
+        Total Price <span>GHC {{ totalItemPrice }}</span>
       </p>
       <button
         type="button"
@@ -63,7 +61,7 @@
         </svg>
       </button>
     </div>
-  </d>
+  </div>
 </template>
 
 <script setup>
@@ -73,7 +71,6 @@ import axiosConfig from "../../utils/axioxConfig";
 import router from "../../router";
 
 // get cart Items
-
 const allCartItems = ref();
 const loading = ref(true);
 const error = ref(null);
@@ -113,5 +110,17 @@ const handleDelete = async (id) => {
   }
 };
 
-onMounted(() => getAllCart());
+// function to calculate total price
+
+const totalItemPrice = ref(0);
+const settingTotal = () => {
+  const priceItem = document.querySelectorAll(".price");
+  const priceArray = Array.from(priceItem);
+  let itemArray = [];
+  priceArray.forEach((item) => itemArray.push(Number(item.innerHTML)));
+  totalItemPrice.value = itemArray.reduce((a, b) => a + b, 0);
+};
+onMounted(() => {
+  getAllCart();
+});
 </script>
