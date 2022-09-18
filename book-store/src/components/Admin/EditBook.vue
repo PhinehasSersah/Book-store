@@ -77,8 +77,7 @@
           type="file"
           id="image"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dark focus:border-dark block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-dark dark:focus:border-dark"
-          required
-          v-on:change="handleImageChange($event)"
+          v-on:change="handleEditImageChange($event)"
           accept="image/*"
           capture
         />
@@ -100,6 +99,7 @@
       </div>
       <div class="flex justify-between mt-4">
         <button
+          @click="handleEdit()"
           type="submit"
           class="text-white bg-dark hover:bg-light hover:text-dark hover:border-2 hover:border-dark focus:ring-4 focus:outline-none focus:ring-dark font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-dark dark:hover:bg-dark dark:focus:ring-dark"
         >
@@ -167,9 +167,14 @@ const handleEdit = async () => {
   formData.append("description", editBookData.description);
   formData.append("price", editBookData.price);
   formData.append("quantity", editBookData.quantity);
-  formData.append("picture", editPictureData.value);
+  if (editPictureData.value === null || editPictureData.value === undefined) {
+    formData.append("picture", props.picture);
+  }else {
+    formData.append("picture", editPictureData.value);
+  }
 
   const token = localStorage.getItem("token");
+  console.log(editPictureData.value)
   try {
     await axiosConfig.put(`books/${props.id}`, formData, {
       headers: {

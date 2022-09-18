@@ -223,7 +223,7 @@ const createBook = async () => {
     createBookData.quantity = ""
     pictureData.value = ""
 
-    
+
     setTimeout(() => {
       pending.value = false;
     }, 2000)
@@ -242,7 +242,7 @@ const getAllBooks = async () => {
     loading.value = true;
     const response = await axiosConfig.get("books");
     allBooks.value = response.data.books;
-    console.log(allBooks);
+    console.log(allBooks.value);
     loading.value = false;
   } catch (err) {
     error.value = err;
