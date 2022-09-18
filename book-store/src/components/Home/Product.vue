@@ -172,7 +172,7 @@ const addToCart = async (bookID, quantity) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    getAllCart();
+    // getAllCart();
     successMessage.value = response.data.msg;
     // router.go();
   } catch (error) {

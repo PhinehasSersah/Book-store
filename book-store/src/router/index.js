@@ -14,6 +14,7 @@ const routes = [
     path: "/cart",
     name: "Cart",
     component: CartPage,
+    meta: { log: true },
   },
   {
     path: "/signup",
@@ -35,12 +36,15 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const admin = localStorage.getItem("admin");
+  const loggedIn = localStorage.getItem("loggedIn");
   if (to.meta.auth && !admin) {
     next("/");
   } else if (to.meta.auth && admin) {
     next();
+  } else if (to.meta.log && !loggedIn) {
+    next("/signup");
   } else {
-    next()
+    next();
   }
 });
 export default router;
