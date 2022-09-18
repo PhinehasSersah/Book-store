@@ -29,7 +29,7 @@
                 ></path>
               </svg>
               <span class="absolute -right-2 -top-4 font-bold">{{
-                allCartItems?.length
+                cartLenght
               }}</span>
             </div>
           </div>
@@ -147,6 +147,7 @@ watch(search, () => getAllBooks());
 
 // add  to cart
 const logError = ref(false);
+const cartLenght = ref()
 const errorMessage = ref("");
 const successMessage = ref("");
 const loggedIn = localStorage.getItem("loggedIn");
@@ -174,6 +175,7 @@ const addToCart = async (bookID, quantity) => {
     });
     // getAllCart();
     successMessage.value = response.data.msg;
+    cartLenght.value ++
     // router.go();
   } catch (error) {
     throw error;
@@ -190,7 +192,8 @@ const getAllCart = async () => {
       },
     });
     allCartItems.value = response.data.cart;
-    console.log(allCartItems.value);
+    console.log(response.data);
+    cartLenght.value = response.data.count
     // loading.value = false;
   } catch (err) {
     error.value = err;

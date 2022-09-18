@@ -143,12 +143,12 @@ import axiosConfig from "../../utils/axioxConfig";
 const showSignUp = ref(true);
 
 const loginData = reactive({
-  name: "",
+  username: "",
   password: "",
 });
 
 const signUpData = reactive({
-  name: "",
+  username: "",
   password: "",
   confirmPassword: "",
 });
@@ -168,11 +168,11 @@ const toggle = () => {
 // handleSignUP
 
 const handleSignUp = async () => {
-  if (!signUpData.name || !signUpData.password) {
-    return (errorMessage.value = "Please enter name and password");
+  if (!signUpData.username || !signUpData.password) {
+    return (errorMessage.value = "Please enter username and password");
   }
   let formData = new FormData();
-  formData.append("name", signUpData.name);
+  formData.append("username", signUpData.username);
   formData.append("password", signUpData.password);
 
   try {
@@ -181,7 +181,7 @@ const handleSignUp = async () => {
         "Content-Type": "multipart/form-data",
       },
     });
-    signUpData.name = "";
+    signUpData.username = "";
     signUpData.password = "";
     signUpData.confirmPassword = "";
     showSignUp.value = false
@@ -190,11 +190,11 @@ const handleSignUp = async () => {
   }
 };
 const handleSingIn = async () => {
-  if (!loginData.name || !loginData.password) {
-    return (errorMessage.value = "Please enter name and password");
+  if (!loginData.username || !loginData.password) {
+    return (errorMessage.value = "Please enter username and password");
   }
   let formData = new FormData();
-  formData.append("name", loginData.name);
+  formData.append("username", loginData.username);
   formData.append("password", loginData.password);
 
   try {
@@ -206,11 +206,11 @@ const handleSingIn = async () => {
 
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("loggedIn", true);
-    loginData.name = "";
+    loginData.username = "";
     loginData.password = "";
 
     const userData = response?.data?.user;
-    if (userData.name === "admin") {
+    if (userData.username === "admin") {
       localStorage.setItem("admin", true);
       setTimeout(() => {
         router.push("/admin");
