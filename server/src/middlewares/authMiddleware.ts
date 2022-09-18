@@ -4,7 +4,6 @@ import { Unauthenticated } from "../errors";
 
 export const authMiddleware: RequestHandler = async (req, res, next) => {
 	const authHeader = req.headers.authorization;
-	console.log("req", req.headers);
 
 	if (!authHeader || !authHeader.startsWith("Bearer")) {
 		throw new Unauthenticated("user not authenticated");

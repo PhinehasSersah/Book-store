@@ -30,12 +30,12 @@ export const loginHandler: RequestHandler<{}, {}, UserDocument> = async (
 	}
 	const user = await User.findOne({ name });
 	if (!user) {
-		throw new Unauthenticated("invalid credentials");
+		throw new Unauthenticated("not authenticated");
 	}
 
 	const isPasswordMatch = await user.comparePassword(password);
 	if (!isPasswordMatch) {
-		throw new Unauthenticated("invalid credentials");
+		throw new Unauthenticated("not authenticated");
 	}
 	const payload = { name: user.name, id: user._id };
 	const token = createJwt(payload);

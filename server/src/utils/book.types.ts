@@ -6,6 +6,7 @@ export interface BookInput {
 	description: string;
 	picture: string;
 	quantity: number;
+	price: number;
 	user: UserDocument["_id"];
 }
 

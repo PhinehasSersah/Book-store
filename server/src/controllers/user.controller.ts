@@ -80,7 +80,6 @@ export const deleteBookHandler: RequestHandler<{ id: string }, {}, {}> = async (
 		throw new NotFound(`no book found with id : ${req.params.id}`);
 	}
 	await book.remove();
-
 	res
 		.status(StatusCodes.OK)
 		.json({ msg: `book with id : ${req.params.id} successfully deleted` });
@@ -93,7 +92,7 @@ export const getBooksHandler: RequestHandler<
 	{ q: string }
 > = async (req, res) => {
 	const { q } = req.query;
-	const queryObj: { title?: any } = {};
+	const queryObj: { title?: any; quantity: any } = { quantity: { $gt: 0 } };
 
 	if (q) {
 		queryObj.title = { $regex: q, $options: "i" };

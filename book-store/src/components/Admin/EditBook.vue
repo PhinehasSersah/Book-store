@@ -21,11 +21,7 @@
       </svg>
     </p>
 
-
-    <form
-      @click.prevent="handleEdit()"
-      class="w-3/5 mx-auto shadow-lg shadow-brown rounded-lg p-12 my-16"
-    >
+    <form class="w-3/5 mx-auto shadow-lg shadow-brown rounded-lg p-12 my-16">
       <div class="mb-2">
         <label
           for="title"

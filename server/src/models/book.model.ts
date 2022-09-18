@@ -11,8 +11,12 @@ const BookSchema = new Schema<BookInput>({
 	description: {
 		type: String,
 		required: [true, "provide book description"],
-		maxlength: [100, "atmost 50 charaters"],
 		minlength: [3, "atleast 3 charaters"],
+	},
+	price: {
+		type: Number,
+		required: [true, "provide book price"],
+		default: 0,
 	},
 	picture: String,
 	quantity: {

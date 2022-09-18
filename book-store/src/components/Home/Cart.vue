@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-[88vh] bg-light">
+  <div class="w-full h-[88vh] bg-light relative">
     <h3 class="text-center text-2xl p-4 text-dark">Cart</h3>
     <div
       v-if="!loading && allCartItems && allCartItems.length"
@@ -41,25 +41,100 @@
       <p class="font-bold text-xl">
         Total Price <span>GHC {{ totalItemPrice }}</span>
       </p>
-      <button
-        type="button"
-        class="inline-flex font-bold items-center py-2 px-4 text-sm text-gray-900 bg-transparent rounded-lg border border-gray-900 hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
-      >
-        Checkout
-        <svg
-          aria-hidden="true"
-          class="ml-2 -mr-1 w-5 h-5"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
+      <div>
+        <button
+          @click="clearCart()"
+          class="inline-flex font-bold items-center py-2 px-4 text-sm text-red-600 bg-transparent rounded-lg border border-red-600 hover:bg-red-600 mr-8 hover:text-white focus:z-10 focus:ring-2 focus:ring-red-500 focus:bg-red-600 focus:text-white"
         >
-          <path
-            fill-rule="evenodd"
-            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </button>
+          Clear Cart
+        </button>
+        <button
+          type="button"
+          class="inline-flex font-bold items-center py-2 px-4 text-sm text-gray-900 bg-transparent rounded-lg border border-gray-900 hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
+          @click="viewOrder()"
+        >
+          Checkout
+          <svg
+            aria-hidden="true"
+            class="ml-2 -mr-1 w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- order card  -->
+
+      <div
+        class="absolute top-36 left-1/2 -translate-x-1/2 bg-white rounded-lg shadow dark:bg-gray-700 w-1/3 h-2/3"
+        :class="{ hidden: !showOrder }"
+      >
+        <!-- Modal header -->
+        <div class="p-4 rounded-t border-b relative">
+          <h3
+            class="text-xl text-center font-semibold text-gray-900 dark:text-white"
+          >
+            Confirm Purchase
+          </h3>
+          <button @click="hideOder()" class="text-dark absolute right-4 top-3">
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <div class="h-96 w-96 mx-auto">
+          <h4 class="text-center font-semibold my-2">Books Ordered</h4>
+
+          <div class="w-full h-44 overflow-y-auto">
+            <div
+              class="w-full"
+              v-for="(item, index) in allCartItems"
+              :key="index"
+            >
+              <p class="border-2 my-2 w-full h-10 font-semibold p-1 rounded-sm">
+                {{ item.bookID.title }}
+              </p>
+            </div>
+          </div>
+      
+          <!-- Modal footer -->
+          <div
+            class="flex items-center justify-between p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600"
+          >
+            <button
+              data-modal-toggle="defaultModal"
+              type="button"
+              class="text-white bg-dark hover:bg-brown hover:text-dark focus:ring-4 focus:outline-none focus:ring-dark font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            >
+              Place Order
+            </button>
+            <button
+              @click="clearCart()"
+              class="inline-flex font-bold items-center py-2 px-4 text-sm text-red-600 bg-transparent rounded-lg border border-red-600 hover:bg-red-600 mr-8 hover:text-white focus:z-10 focus:ring-2 focus:ring-red-500 focus:bg-red-600 focus:text-white"
+            >
+              Clear Cart
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -111,7 +186,6 @@ const handleDelete = async (id) => {
 };
 
 // function to calculate total price
-
 const totalItemPrice = ref(0);
 const settingTotal = () => {
   const priceItem = document.querySelectorAll(".price");
@@ -123,4 +197,30 @@ const settingTotal = () => {
 onMounted(() => {
   getAllCart();
 });
+
+// clearing all cart items
+const clearCart = async () => {
+  alert("Are you sure to clear all cart items?");
+  try {
+    loading.value = true;
+    const response = await axiosConfig.delete("cart", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    loading.value = false;
+    router.go();
+  } catch (err) {
+    error.value = err;
+    throw err;
+  }
+};
+// toggeling orders
+const showOrder = ref(false);
+const hideOder = () => {
+  showOrder.value = false;
+};
+const viewOrder = () => {
+  showOrder.value = true;
+};
 </script>
