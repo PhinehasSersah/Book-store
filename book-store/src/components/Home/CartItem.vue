@@ -24,7 +24,7 @@
             >
               -
             </button>
-            <p class="w-8 font-bold text-center mt-1">{{ quantity }}</p>
+            <p class="quantity w-8 font-bold text-center mt-1">{{ quantity }}</p>
             <button
               @click="increment()"
               type="button"

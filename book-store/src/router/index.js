@@ -3,6 +3,7 @@ import HomePage from "../views/HomePage.vue";
 import CartPage from "../views/CartPage.vue";
 import SignUpPage from "../views/SignUpPage.vue";
 import Administration from "../views/Administration.vue";
+import OrdersPage from "../views/OrdersPage.vue";
 
 const routes = [
   {
@@ -26,6 +27,11 @@ const routes = [
     name: "Admin",
     component: Administration,
     meta: { auth: true },
+  },
+  {
+    path: "/orders",
+    name: "Orders",
+    component: OrdersPage,
   },
 ];
 const router = createRouter({

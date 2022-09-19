@@ -73,7 +73,7 @@
       <!-- confirm delete  -->
 
       <div
-      v-if="showDelete"
+        v-if="showDelete"
         class="w-96 h-48 bg-white absolute bottom-28 left-1/2 rounded-lg shadow-lg"
       >
         <h3 class="text-center font-bold my-3">Confirm Clear Cart</h3>
@@ -85,7 +85,7 @@
             Confirm
           </button>
           <button
-          @click="hideDelete()"
+            @click="hideDelete()"
             class="h-10 w-28 font-bold items-center py-2 px-1 text-sm text-dark mt-10 bg-transparent rounded-lg border border-dark hover:bg-brown hover:text-white focus:z-10 focus:ring-2 focus:ring-dark focus:bg-dark focus:text-white"
           >
             Cancel
@@ -145,6 +145,7 @@
             class="flex items-center justify-between p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600"
           >
             <button
+            @click="orderItems()"
               data-modal-toggle="defaultModal"
               type="button"
               class="text-white bg-dark hover:bg-brown hover:text-dark focus:ring-4 focus:outline-none focus:ring-dark font-medium rounded-lg text-sm px-5 py-2.5 text-center"
@@ -178,7 +179,6 @@ const getAllCart = async () => {
       },
     });
     allCartItems.value = response.data.cart;
-    console.log(allCartItems.value);
     loading.value = false;
   } catch (err) {
     error.value = err;
@@ -250,4 +250,44 @@ const viewDelete = () => {
   showDelete.value = true;
 };
 
+// placing orders
+
+const orderItems = async () => {
+  if (!allCartItems.value.length) {
+    return;
+  }
+  const priceItem = document.querySelectorAll(".price");
+  const quantity = document.querySelectorAll(".quantity");
+  const priceArray = Array.from(priceItem);
+  const quantityArray = Array.from(quantity);
+  let orders = [];
+  for (let i = 0; i < priceArray.length; i++) {
+    let orderItems = {
+      bookID: "",
+      price: 0,
+      quantity: 0,
+    };
+    orderItems.bookID = allCartItems.value[i]?.bookID?._id;
+    orderItems.price = Number(priceArray[i].innerHTML);
+    orderItems.quantity = Number(quantityArray[i].innerHTML);
+    orders.push(orderItems);
+  }
+  try {
+    const response = await axiosConfig.post(
+      "orders",
+      {
+        cartItems: orders,
+        total_price: totalItemPrice.value,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(response.data);
+  } catch (error) {
+    throw error;
+  }
+};
 </script>
