@@ -1,10 +1,12 @@
 <template>
   <div class="w-screen h-96 relative">
-    <img
-      class="w-full h-full object-cover"
-      src="../../assets/reading.jpg"
-      alt=""
-    />
+    <div class="w-screen h-96">
+      <img
+        class="w-full h-96 object-cover"
+        src="../../assets/reading.jpg"
+        alt=""
+      />
+    </div>
     <div class="w-1/2 h-full absolute top-0 left-[50%] translate-x-[-50%]">
       <h1
         class="text-3xl tracking-widest mt-24 uppercase font-bold text-white text-center"

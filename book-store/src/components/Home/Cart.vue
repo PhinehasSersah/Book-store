@@ -43,7 +43,7 @@
       </p>
       <div>
         <button
-          @click="clearCart()"
+          @click="viewDelete()"
           class="inline-flex font-bold items-center py-2 px-4 text-sm text-red-600 bg-transparent rounded-lg border border-red-600 hover:bg-red-600 mr-8 hover:text-white focus:z-10 focus:ring-2 focus:ring-red-500 focus:bg-red-600 focus:text-white"
         >
           Clear Cart
@@ -70,6 +70,28 @@
         </button>
       </div>
 
+      <!-- confirm delete  -->
+
+      <div
+      v-if="showDelete"
+        class="w-96 h-48 bg-white absolute bottom-28 left-1/2 rounded-lg shadow-lg"
+      >
+        <h3 class="text-center font-bold my-3">Confirm Clear Cart</h3>
+        <div class="w-2/3 h-3/5 mx-auto my-2 flex justify-between">
+          <button
+            @click="clearCart()"
+            class="h-10 w-28 font-bold items-center py-2 px-1 text-sm text-red-600 mt-10 bg-transparent rounded-lg border border-red-600 hover:bg-red-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-red-500 focus:bg-red-600 focus:text-white"
+          >
+            Confirm
+          </button>
+          <button
+          @click="hideDelete()"
+            class="h-10 w-28 font-bold items-center py-2 px-1 text-sm text-dark mt-10 bg-transparent rounded-lg border border-dark hover:bg-brown hover:text-white focus:z-10 focus:ring-2 focus:ring-dark focus:bg-dark focus:text-white"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
       <!-- order card  -->
 
       <div
@@ -128,12 +150,6 @@
               class="text-white bg-dark hover:bg-brown hover:text-dark focus:ring-4 focus:outline-none focus:ring-dark font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               Place Order
-            </button>
-            <button
-              @click="clearCart()"
-              class="inline-flex font-bold items-center py-2 px-4 text-sm text-red-600 bg-transparent rounded-lg border border-red-600 hover:bg-red-600 mr-8 hover:text-white focus:z-10 focus:ring-2 focus:ring-red-500 focus:bg-red-600 focus:text-white"
-            >
-              Clear Cart
             </button>
           </div>
         </div>
@@ -203,7 +219,6 @@ onMounted(() => {
 
 // clearing all cart items
 const clearCart = async () => {
-  alert("Are you sure to clear all cart items?");
   try {
     loading.value = true;
     const response = await axiosConfig.delete("cart", {
@@ -226,4 +241,13 @@ const hideOder = () => {
 const viewOrder = () => {
   showOrder.value = true;
 };
+// toggeling delete
+const showDelete = ref(false);
+const hideDelete = () => {
+  showDelete.value = false;
+};
+const viewDelete = () => {
+  showDelete.value = true;
+};
+
 </script>

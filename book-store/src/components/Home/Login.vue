@@ -210,12 +210,14 @@ const handleSingIn = async () => {
     loginData.password = "";
 
     const userData = response?.data?.user;
-    if (userData.username === "admin") {
+    console.log(response.data.user)
+    if (userData.role === "admin") {
       localStorage.setItem("admin", true);
       setTimeout(() => {
         router.push("/admin");
       }, 3000);
-    } else {
+    } else if( userData.role === "user") {
+      localStorage.removeItem("admin");
       setTimeout(() => {
         router.push("/");
       }, 2000);

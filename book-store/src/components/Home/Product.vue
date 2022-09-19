@@ -194,27 +194,16 @@ const addToCart = async (bookID, quantity) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    // getAllCart();
     successMessage.value = response.data.msg;
     logSuccess.value = true;
     cartLenght.value++;
-    // router.go();
+    getAllCart();
     setTimeout(() => {
       logSuccess.value = false;
+      router.go();
     }, 3000);
   } catch (error) {
     throw error;
-  }
-};
-
-// funtion to check item already in the cart
-const checkItem = (id) => {
-  for (let item of allCartItems.value) {
-    if (item.bookID._id === id) {
-      inCart.value = true;
-      console.log(inCart.value);
-      return (cartError.value = "item already in cart");
-    }
   }
 };
 

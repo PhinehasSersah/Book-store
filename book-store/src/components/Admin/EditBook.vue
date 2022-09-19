@@ -100,7 +100,7 @@
       </div>
       <div class="flex justify-between mt-4">
         <button
-          @click="handleEdit()"
+          @click.prevent="handleEdit()"
           type="submit"
           class="text-white bg-dark hover:bg-light hover:text-dark hover:border-2 hover:border-dark focus:ring-4 focus:outline-none focus:ring-dark font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-dark dark:hover:bg-dark dark:focus:ring-dark"
         >
@@ -154,15 +154,6 @@ const handleEditImageChange = ($event) => {
 
 // edit book data function
 const handleEdit = async () => {
-  // if (
-  //   !editBookData.title ||
-  //   !editBookData.description ||
-  //   !editBookData.price ||
-  //   !editBookData.quantity ||
-  //   !editPictureData.value
-  // ) {
-  //   return;
-  // }
   let formData = new FormData();
   formData.append("title", editBookData.title);
   formData.append("description", editBookData.description);
