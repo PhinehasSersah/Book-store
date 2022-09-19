@@ -74,7 +74,7 @@
 
       <div
         v-if="showDelete"
-        class="w-96 h-48 bg-white absolute bottom-28 left-1/2 rounded-lg shadow-lg"
+        class="w-96 h-48 bg-white absolute bottom-28 left-1/2 -translate-x-1/2 rounded-lg shadow-lg"
       >
         <h3 class="text-center font-bold my-3">Confirm Clear Cart</h3>
         <div class="w-2/3 h-3/5 mx-auto my-2 flex justify-between">
@@ -145,7 +145,7 @@
             class="flex items-center justify-between p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600"
           >
             <button
-            @click="orderItems()"
+              @click="orderItems()"
               data-modal-toggle="defaultModal"
               type="button"
               class="text-white bg-dark hover:bg-brown hover:text-dark focus:ring-4 focus:outline-none focus:ring-dark font-medium rounded-lg text-sm px-5 py-2.5 text-center"
@@ -228,6 +228,9 @@ const clearCart = async () => {
     });
     loading.value = false;
     router.go();
+    setTimeout(() => {
+      hideDelete();
+    }, 3000);
   } catch (err) {
     error.value = err;
     throw err;
@@ -285,7 +288,9 @@ const orderItems = async () => {
         },
       }
     );
-    console.log(response.data);
+    setTimeout(() => {
+      hideOder();
+    }, 3000);
   } catch (error) {
     throw error;
   }

@@ -1,8 +1,70 @@
 <template>
-  <div class="bg-light w-screen h-screen">
+  <div class="bg-light w-screen h-[120vh] relative">
     <Hearder />
     <h1 class="text-3xl py-6 text-center">Administration Dashboard</h1>
-    <div class="w-full flex">
+
+    <div class="w-96 h-16 mx-auto grid place-items-center">
+      <button
+      @click="viewOrder()"
+        type="button"
+        class="text-white bg-dark hover:bg-brown hover:text-dark focus:ring-4 focus:outline-none focus:ring-dark font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+      >
+        View Orders
+      </button>
+    </div>
+    <!-- view orders button -->
+
+    <div
+    v-if="showOrder"
+      class="w-2/3 h-3/5 bg-white absolute left-1/2 -translate-x-1/2 top-60 z-20 rounded-lg shadow-md mx-auto overflow-y-auto"
+    >
+      <div class="overflow-x-auto relative">
+        <!-- close  -->
+        <button @click="hideOrder()" class="text-dark absolute right-4 top-3">
+          <svg
+            aria-hidden="true"
+            class="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+        <table
+          class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+        >
+          <thead
+            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+          >
+            <tr>
+              <th scope="col" class="py-3 px-6">Date</th>
+              <th scope="col" class="py-3 px-6">Items</th>
+              <!-- <th scope="col" class="py-3 px-6">Ordered by</th> -->
+              <th scope="col" class="py-3 px-6">Total Price</th>
+            </tr>
+          </thead>
+          <tbody v-for="(item, index) in orderData" :key="index">
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                {{ moment(item.createdAt).format("MMM Do YY") }}
+              </th>
+              <td class="py-4 px-6">{{ item.cartItems.length }}</td>
+              <td class="py-4 px-6">GHC : {{ item.total_price }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="w-full flex border-b-[1px] border-dark py-6">
       <div class="w-1/2 border-r-[1px] border-dark relative">
         <!-- success modal  -->
         <div
@@ -217,17 +279,14 @@ const createBook = async () => {
       },
     });
     successMessage.value = "New book created";
-    createBookData.title = ""
-    createBookData.description = ""
-    createBookData.price = "",
-    createBookData.quantity = ""
-    pictureData.value = ""
-
+    createBookData.title = "";
+    createBookData.description = "";
+    (createBookData.price = ""), (createBookData.quantity = "");
+    pictureData.value = "";
 
     setTimeout(() => {
       pending.value = false;
-    }, 2000)
-   
+    }, 2000);
   } catch (error) {
     throw error;
   }
@@ -242,7 +301,6 @@ const getAllBooks = async () => {
     loading.value = true;
     const response = await axiosConfig.get("books");
     allBooks.value = response.data.books;
-    console.log(allBooks.value);
     loading.value = false;
   } catch (err) {
     error.value = err;
@@ -250,4 +308,9 @@ const getAllBooks = async () => {
   }
 };
 onMounted(() => getAllBooks());
+
+// toggeling orders
+const showOrder = ref(false);
+const viewOrder = () => (showOrder.value = true);
+const hideOrder = () => (showOrder.value = false);
 </script>
