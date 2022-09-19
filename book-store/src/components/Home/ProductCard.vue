@@ -73,11 +73,5 @@ const props = defineProps({
   addToCart: {
     type: Function,
   },
-  // inCart: {
-  //   type: Boolean,
-  // },
-  // cartError: {
-  //   type: String,
-  // },
 });
 </script>

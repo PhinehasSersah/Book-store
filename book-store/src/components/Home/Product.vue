@@ -162,6 +162,8 @@ const errorMessage = ref("");
 const successMessage = ref("");
 const loggedIn = localStorage.getItem("loggedIn");
 const token = localStorage.getItem("token");
+
+
 const addToCart = async (bookID, quantity) => {
   if (!loggedIn) {
     logError.value = true;
@@ -217,7 +219,6 @@ const getAllCart = async () => {
       },
     });
     allCartItems.value = response.data.cart;
-    console.log(allCartItems.value);
     cartLenght.value = response.data.count;
     // loading.value = false;
   } catch (err) {

@@ -5,7 +5,7 @@
 
     <div class="w-96 h-16 mx-auto grid place-items-center">
       <button
-      @click="viewOrder()"
+        @click="viewOrder()"
         type="button"
         class="text-white bg-dark hover:bg-brown hover:text-dark focus:ring-4 focus:outline-none focus:ring-dark font-medium rounded-lg text-sm px-5 py-2.5 text-center"
       >
@@ -15,10 +15,10 @@
     <!-- view orders button -->
 
     <div
-    v-if="showOrder"
-      class="w-2/3 h-3/5 bg-white absolute left-1/2 -translate-x-1/2 top-60 z-20 rounded-lg shadow-md mx-auto overflow-y-auto"
+      v-if="showOrder"
+      class="w-8/12 h-fit bg-white absolute left-1/2 -translate-x-1/2 top-60 z-20 rounded-lg shadow-md mx-auto overflow-y-auto"
     >
-      <div class="overflow-x-auto relative">
+     
         <!-- close  -->
         <button @click="hideOrder()" class="text-dark absolute right-4 top-3">
           <svg
@@ -35,33 +35,41 @@
             ></path>
           </svg>
         </button>
-        <table
-          class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-        >
-          <thead
-            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-          >
-            <tr>
-              <th scope="col" class="py-3 px-6">Date</th>
-              <th scope="col" class="py-3 px-6">Items</th>
-              <!-- <th scope="col" class="py-3 px-6">Ordered by</th> -->
-              <th scope="col" class="py-3 px-6">Total Price</th>
-            </tr>
-          </thead>
-          <tbody v-for="(item, index) in orderData" :key="index">
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <th
-                scope="row"
-                class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+
+        <div class="w-full h-4/5 mt-10 rounded-lg shadow-md mx-auto overflow-y-auto">
+          <div class="overflow-x-auto relative ">
+            <table
+              class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+            >
+              <thead
+                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
               >
-                {{ moment(item.createdAt).format("MMM Do YY") }}
-              </th>
-              <td class="py-4 px-6">{{ item.cartItems.length }}</td>
-              <td class="py-4 px-6">GHC : {{ item.total_price }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                <tr>
+                  <th scope="col" class="py-3 px-6">Date</th>
+                  <th scope="col" class="py-3 px-6">Items</th>
+                  <th scope="col" class="py-3 px-6">Ordered by</th>
+                  <th scope="col" class="py-3 px-6">Total Price</th>
+                </tr>
+              </thead>
+              <tbody v-for="(item, index) in orderData" :key="index">
+                <tr
+                  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                >
+                  <th
+                    scope="row"
+                    class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {{ moment(item.createdAt).format("MMM Do YY") }}
+                  </th>
+                  <td class="py-4 px-6">{{ item.cartItems.length }}</td>
+                  <td class="py-4 px-6">{{ item.orderBy.username }}</td>
+                  <td class="py-4 px-6">GHC : {{ item.total_price }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      
     </div>
 
     <div class="w-full flex border-b-[1px] border-dark py-6">
@@ -233,6 +241,7 @@ import Hearder from "../Home/Hearder.vue";
 import { reactive, ref, onMounted } from "vue";
 import EditBook from "./EditBook.vue";
 import axiosConfig from "../../utils/axioxConfig";
+import moment from "moment";
 
 // create books
 const createBookData = reactive({
@@ -252,6 +261,7 @@ const handleImageChange = ($event) => {
 // creating new books
 const pending = ref(false);
 const successMessage = ref("");
+const token = localStorage.getItem("token");
 const createBook = async () => {
   if (
     !createBookData.title ||
@@ -269,7 +279,6 @@ const createBook = async () => {
   formData.append("quantity", createBookData.quantity);
   formData.append("picture", pictureData.value);
 
-  const token = localStorage.getItem("token");
   try {
     pending.value = true;
     const response = await axiosConfig.post("books", formData, {
@@ -311,6 +320,26 @@ onMounted(() => getAllBooks());
 
 // toggeling orders
 const showOrder = ref(false);
-const viewOrder = () => (showOrder.value = true);
+const viewOrder = () => {
+  showOrder.value = true;
+  getAllOrders();
+};
 const hideOrder = () => (showOrder.value = false);
+
+// getting all orders
+
+const orderData = ref();
+const getAllOrders = async () => {
+  try {
+    const response = await axiosConfig.get("orders/admin", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    orderData.value = response.data.orders;
+    console.log(orderData.value);
+  } catch (error) {
+    throw error;
+  }
+};
 </script>

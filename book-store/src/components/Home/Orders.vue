@@ -16,7 +16,6 @@
               <tr>
                 <th scope="col" class="py-3 px-6">Date</th>
                 <th scope="col" class="py-3 px-6">Items</th>
-                <!-- <th scope="col" class="py-3 px-6">Ordered by</th> -->
                 <th scope="col" class="py-3 px-6">Total Price</th>
               </tr>
             </thead>
@@ -56,7 +55,6 @@ const getOrders = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.data);
     orderData.value = response.data.orders;
   } catch (error) {
     throw error;
